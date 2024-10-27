@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/userdetailstyle.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details Form</title>
+</head>
+<body>
+    <div class="background">
+        <div class="overlay">
+            <div class="container">
+                <div class="quote">
+                    <p>"Fitness is not about being better than someone else; it’s about being better than you used to be."</p>
+                </div>
+                <h1>User Details</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="text" name="age" value="{{ userdet.age }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="height">Height</label>
+                        <input type="text" name="height" value="{{ userdet.height }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weight">Weight</label>
+                        <input type="text" name="weight" value="{{ userdet.weight }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="medical_condition">Medical Condition</label>
+                        <input type="text" name="medical_condition" value="{{ userdet.medical_condition }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="accidental_history">Accidental History</label>
+                        <input type="text" name="accidental_history" value="{{ userdet.accidental_history }}">
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="submit" class="next-btn">Save</button>
+                        <button type="reset" class="cancel-btn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.cancel-btn').addEventListener('click', function(e) {
+            if (!confirm('Are you sure you want to cancel? All entered data will be lost.')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

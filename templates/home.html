@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J FITNESS</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="{% static 'images/logo.jpg' %}" alt="J FITNESS Logo">
+        </div>
+        <div class="site-name">
+            <span>J FITNESS</span>
+        </div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#trainers">Trainers</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <a href="#about">About Us</a>
+        </div>
+    </div>
+
+    <!-- Home Section -->
+    <section id="home" class="section home-section">
+        <h1>Welcome to <span class="site-name">J FITNESS</span></h1>
+        <p>Your journey to a healthier life starts here.</p>
+        <blockquote>
+            <p>"The best way to predict the future is to create it." - Peter Drucker</p>
+        </blockquote>
+        <div class="login-form">
+            <h2>Login</h2>
+            <form action="{% url 'home' %}" method="POST">
+                {% csrf_token %}
+                <input type="text" placeholder="Email" name="email" id="username">
+                <input type="password" placeholder="Password" name="password" id="password">
+                <button type="submit">Login</button>
+                <button type="button" class="cancel-btn" onclick="resetFields()">Cancel</button>
+                <p><a href="{% url 'registration' %}">New Registration</a></p>
+            </form>
+            {% for message in messages %}
+                <h3 style="color:#ff512f">{{ message }}</h3>
+            {% endfor %}
+        </div>
+        
+    </section>
+
+    <!-- Trainers Section -->
+    <section id="trainers" class="section trainers-section">
+        <h1>Our Trainers</h1>
+        <div class="trainers-container">
+            <div class="trainer">
+                <img src="{% static 'images/trainer1.jpg' %}" alt="Trainer 1">
+                <h2>John Doe</h2>
+                <p>Expert in strength training and bodybuilding. Over 10 years of experience.</p>
+            </div>
+            <div class="trainer">
+                <img src="{% static 'images/trainer2.jpg' %}" alt="Trainer 2">
+                <h2>Jane Smith</h2>
+                <p>Specialist in yoga and flexibility training. Helping clients achieve balance and peace.</p>
+            </div>
+            <div class="trainer">
+                <img src="{% static 'images/trainer3.jpg' %}" alt="Trainer 3">
+                <h2>Mike Johnson</h2>
+                <p>Cardio and endurance coach with a passion for pushing limits.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section services-section">
+        <h1>Our Services</h1>
+        <div class="services-container">
+            <div class="service">
+                <h2>Personal Trainer</h2>
+                <p>Get one-on-one coaching tailored to your fitness goals.</p>
+            </div>
+            <div class="service">
+                <h2>Goal Setting</h2>
+                <p>Work with our experts to set achievable fitness goals.</p>
+            </div>
+            <div class="service">
+                <h2>Diet Plan</h2>
+                <p>Receive a customized diet plan that suits your lifestyle and goals.</p>
+            </div>
+            <div class="service">
+                <h2>Workout Plan</h2>
+                <p>Follow a structured workout plan designed just for you.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <h1>Contact Us</h1>
+        <p>Get in touch with us to learn more or to book your first session.</p>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="section about-section">
+        <h1>About Us</h1>
+        <p>Learn more about our mission and the team behind J FITNESS.</p>
+    </section>
+
+    <!-- JavaScript to Clear Form Fields -->
+    <script>
+        function resetFields() {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+    </script>
+
+</body>
+</html>
+
+

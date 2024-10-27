@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+    <!-- Header with user details, date, time, and logout button -->
+    <header class="dashboard-header">
+        <div class="user-info">
+            <h3>Welcome, {{ userdet.fname }} {{ userdet.lname }}</h3>
+            <p>Email: {{ userdet.email }}</p>
+        </div>
+        <div class="top-right">
+            <p id="datetime"></p> <!-- Date and Time will be displayed here -->
+            <a href="{% url 'home' %}" class="logout-btn">Logout</a>
+        </div>
+    </header>
+
+    <!-- Main dashboard section -->
+    <main class="dashboard-main">
+        <section class="goal-section">
+            <h2>Your Fitness Goals</h2>
+            <div class="goal-info">
+                <!-- Display Goal and Equipment -->
+                <button class="goal-display-btn">
+                    Goal: {{ userdet.goal }} | Equipment: {{ userdet.equipment }} | Other Equipment: {{ userdet.otherequipment }}
+                </button>
+
+                <!-- Edit Goal Button -->
+                <a href="{% url 'goal' %}" class="edit-goal-btn">Edit Goal & Equipment</a>
+            </div>
+
+            <!-- Select Trainer Form -->
+            <form id="trainer-form" method="POST" action="{% url 'dashboard' %}">
+                {% csrf_token %}
+                <input type="hidden" name="trainer_name" id="trainer_name_field">
+                <input type="hidden" name="scheduled_time" id="trainer_time_field">
+
+                <!-- Select Trainer Button -->
+                <button class="select-trainer-btn" type="button" onclick="toggleTrainerSelection()">Select Trainer</button>
+                
+                <!-- Trainer Selection Section -->
+                <div class="trainer-selection" id="trainer-selection" style="display:none;">
+                    <h3>Select a Trainer</h3>
+                    <div class="trainer-info">
+                        <div class="trainer" id="trainer1">
+                            <h4>Trainer 1 (t1)</h4>
+                            <p>Expert in Cardio and Weight Loss</p>
+                            <button type="button" onclick="confirmTrainer('Trainer 1')">Select</button>
+                        </div>
+                        <div class="trainer" id="trainer2">
+                            <h4>Trainer 2 (t2)</h4>
+                            <p>Expert in Strength Training</p>
+                            <button type="button" onclick="confirmTrainer('Trainer 2')">Select</button>
+                        </div>
+                        <div class="trainer" id="trainer3">
+                            <h4>Trainer 3 (t3)</h4>
+                            <p>Expert in Yoga and Flexibility</p>
+                            <button type="button" onclick="confirmTrainer('Trainer 3')">Select</button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="cancelSelection()">Cancel</button>
+                </div>
+
+                <!-- Time Selection Section -->
+                <div id="time-selection" style="display:none;">
+                    <h3>Select Time</h3>
+                    <input type="time" id="trainer-time">
+                    <button type="button" onclick="confirmTime()">OK</button>
+                    <button type="button" onclick="cancelTime()">Cancel</button>
+                </div>
+
+                <!-- Chat Section -->
+               <!-- Chat Button and Chat Section -->
+<button class="chat-btn" type="button" onclick="toggleChat()">Chat with Trainer</button>
+
+<!-- Chat Section -->
+<div id="chat-section" style="display:none;">
+    <h3>Chat with Trainer</h3>
+    <div class="chat-messages" id="chat-messages">
+        <!-- Display the existing messages if available -->
+        {% if message_log %}
+        {% for message in message_log.splitlines %}
+            <div>{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <input type="text" id="chat-input" placeholder="Type your message...">
+    <button type="button" onclick="sendMessage()">Send</button>
+    <button type="button" onclick="closeChat()">Cancel</button> <!-- Close chat button -->
+</div>
+
+
+            </form>
+        </section>
+
+        <section class="quotes-section">
+            <blockquote>"Success starts with self-discipline."</blockquote>
+            <blockquote>"No pain, no gain."</blockquote>
+        </section>
+
+        <!-- Small graph in the bottom right corner -->
+        <div class="small-graph">
+            <h3>Workout Progress</h3>
+            <canvas id="progressGraph" width="100" height="100"></canvas>
+        </div>
+    </main>
+
+    <script>
+        // Function to display date and time
+        function updateDateTime() {
+            var now = new Date();
+            var date = now.toLocaleDateString();
+            var time = now.toLocaleTimeString();
+            document.getElementById('datetime').textContent = date + ' ' + time;
+        }
+    
+        // Update the date and time every second
+        setInterval(updateDateTime, 1000);
+        updateDateTime(); // Call the function once to display immediately
+    
+        // Functions for trainer selection
+        function toggleTrainerSelection() {
+            const trainerSelection = document.getElementById('trainer-selection');
+            trainerSelection.style.display = trainerSelection.style.display === 'none' ? 'block' : 'none';
+        }
+    
+        function confirmTrainer(trainer) {
+            document.getElementById('trainer_name_field').value = trainer;
+            document.getElementById('trainer-selection').style.display = 'none';
+            document.getElementById('time-selection').style.display = 'block';
+            alert('You selected ' + trainer);
+        }
+    
+        function cancelSelection() {
+            document.getElementById('trainer-selection').style.display = 'none';
+        }
+    
+        function confirmTime() {
+            var time = document.getElementById('trainer-time').value;
+            if (time) {
+                document.getElementById('trainer_time_field').value = time;
+    
+                // Use AJAX to submit the form without refreshing the page
+                var formData = new FormData(document.getElementById('trainer-form'));
+    
+                fetch('{% url "dashboard" %}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}', // CSRF token for security
+                    }
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Hide time selection and show chat section after successful submission
+                        document.getElementById('time-selection').style.display = 'none';
+                        document.getElementById('chat-section').style.display = 'block';
+                        alert('Time scheduled successfully!');
+                    } else {
+                        alert('There was an error: ' + data.message);
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error scheduling the time.');
+                });
+            } else {
+                alert('Please select a time');
+            }
+        }
+    
+        function cancelTime() {
+            document.getElementById('time-selection').style.display = 'none';
+        }
+    
+        function sendMessage() {
+            const messageInput = document.getElementById('chat-input');
+            const message = messageInput.value;
+        
+            if (message) {
+                const chatMessages = document.getElementById('chat-messages');
+                const newMessage = document.createElement('div');
+                newMessage.textContent = "You: " + message;
+                chatMessages.appendChild(newMessage); // Add the new message to the chat box
+        
+                // Use AJAX to send the message to the server
+                const messageField = new FormData();
+                messageField.append('message', message);
+                messageField.append('trainer_name', document.getElementById('trainer_name_field').value); // Add trainer name if needed
+                // Removed any reference to scheduled_time
+        
+                fetch('{% url "dashboard" %}', {
+                    method: 'POST',
+                    body: messageField,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}', // CSRF token for security
+                    }
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Clear input after sending
+                        messageInput.value = ''; // Clear input
+                        alert('Message sent successfully!');
+                    } else {
+                        alert('There was an error: ' + data.message);
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error sending the message.');
+                });
+            } else {
+                alert('Please type a message');
+            }
+        }
+        
+        // Function to toggle the chat section
+        function toggleChat() {
+            const chatSection = document.getElementById('chat-section');
+            chatSection.style.display = chatSection.style.display === 'none' ? 'block' : 'none';
+        }
+    
+        // Function to close the chat section
+        function closeChat() {
+            document.getElementById('chat-section').style.display = 'none';
+        }
+    </script>
+    
+    
+    
+</body>
+</html>

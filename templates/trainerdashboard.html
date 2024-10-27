@@ -1,0 +1,177 @@
+<!-- trainerdashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/trainerdashboard.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>Trainer Dashboard</h2>
+            <ul>
+                <li><a href="#" id="myClientsBtn">My Clients</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#" id="scheduleBtn">Schedule</a></li>
+                <li><a href="#" id="messagesBtn">Messages</a></li>  <!-- Added ID here -->
+                <li><a href="#">Settings</a></li>
+                <li><a href="{% url 'home' %}">Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <h1>Welcome, Trainer!</h1>
+            <p>This is your dashboard where you can manage clients, track schedules, and more.</p>
+        </div>
+    </div>
+
+    <!-- Modal for Messages -->
+    <div id="messagesModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-messages">&times;</span>
+            <h2>Messages</h2>
+            <div id="messagesSection">
+                {% for message in messages %}
+                <div class="message-info">
+                    <p><strong>Client:</strong> {{ message.user.fname }} {{ message.user.lname }}</p>
+                    <p><strong>Message:</strong> {{ message.message_log }}</p>
+                    <p><strong>Sent At:</strong> {{ message.created_at|date:"Y-m-d H:i:s" }}</p>  <!-- Show the timestamp -->
+                    <hr>
+                    <form id="replyForm" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="trainer_name" value="Trainer 1">
+                        <input type="hidden" name="user_id" value="{{ message.user.id }}">
+                        <textarea name="reply_message" placeholder="Write your reply here..." required></textarea>
+                        <button type="submit">Send Reply</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            <button id="okMessagesBtn" class="modal-btn">OK</button>
+        </div>
+    </div>
+
+    <!-- Existing Modal for My Clients -->
+    <div id="myClientsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>My Clients</h2>
+            <div id="clientDetails">
+                {% for client in clients %}
+                <div class="client-info">
+                    <p><strong>Name:</strong> {{ client.fname }} {{ client.lname }}</p>
+                    <p><strong>Email:</strong> {{ client.email }}</p>
+                    <p><strong>Contact:</strong> {{ client.contactno }}</p>
+                    <p><strong>Goal:</strong> {{ client.goal }}</p>
+                    <p><strong>Equipment:</strong> {{ client.equipment }}</p>
+                    <p><strong>Height:</strong> {{ client.height }}</p>
+                    <p><strong>Weight:</strong> {{ client.weight }}</p>
+                    <p><strong>Medical Condition:</strong> {{ client.medical_condition }}</p>
+                    <p><strong>Accidental History:</strong> {{ client.accidental_history }}</p>
+                </div>
+                <hr>
+                {% endfor %}
+            </div>
+            <button id="okBtn" class="modal-btn">OK</button>
+        </div>
+    </div>
+     <!-- Modal for Schedule -->
+     <!-- Modal for Schedule -->
+<div id="scheduleModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-schedule">&times;</span>
+        <h2>My Schedule</h2>
+        <div id="scheduleDetails">
+            {% for schedule in schedules %}
+            <div class="schedule-info">
+                <p><strong>Client:</strong> {{ schedule.user.fname }} {{ schedule.user.lname }}</p>
+                <p><strong>Scheduled Time:</strong> {{ schedule.time_selection|time:"H:i" }}</p> <!-- Format the time as needed -->
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+        <button id="okScheduleBtn" class="modal-btn">OK</button>
+    </div>
+</div>
+
+
+
+    <script>
+        // Get modal elements
+        var myClientsModal = document.getElementById("myClientsModal");
+        var messagesModal = document.getElementById("messagesModal");
+        var messagesBtn = document.getElementById("messagesBtn");
+        var myClientsBtn = document.getElementById("myClientsBtn");
+        var closeMessages = document.getElementsByClassName("close-messages")[0];
+        var closeMyClients = document.getElementsByClassName("close")[0];
+        var okBtn = document.getElementById("okBtn");
+        var okScheduleBtn = document.getElementById("okScheduleBtn");  // OK button for schedule
+
+        var closeSchedule = document.getElementsByClassName("close-schedule")[0];
+        var scheduleBtn = document.getElementById("scheduleBtn");
+
+        var scheduleModal = document.getElementById("scheduleModal");  // New Schedule modal
+
+    
+        var okMessagesBtn = document.getElementById("okMessagesBtn");
+
+        // Show the modal when My Clients is clicked
+        myClientsBtn.onclick = function() {
+            myClientsModal.style.display = "block";
+        }
+        scheduleBtn.onclick = function() {
+            scheduleModal.style.display = "block";
+        }
+
+        // Show the modal when Messages is clicked
+        messagesBtn.onclick = function() {
+            messagesModal.style.display = "block";
+        }
+
+        // Close the My Clients modal
+        closeMyClients.onclick = function() {
+            myClientsModal.style.display = "none";
+        }
+
+        // Close the Messages modal
+        closeMessages.onclick = function() {
+            messagesModal.style.display = "none";
+        }
+         // Close the Schedule modal
+         closeSchedule.onclick = function() {
+            scheduleModal.style.display = "none";
+        }
+
+        // Close the My Clients modal when the OK button is clicked
+        okBtn.onclick = function() {
+            myClientsModal.style.display = "none";
+        }
+
+        // Close the Messages modal when the OK button is clicked
+        okMessagesBtn.onclick = function() {
+            messagesModal.style.display = "none";
+        }
+        okMessagesBtn.onclick = function() {
+            messagesModal.style.display = "none";
+        }
+        okScheduleBtn.onclick = function() {
+            scheduleModal.style.display = "none";
+        }
+
+        // Close the modal if user clicks anywhere outside of it
+        window.onclick = function(event) {
+            if (event.target == myClientsModal) {
+                myClientsModal.style.display = "none";
+            }
+            if (event.target == messagesModal) {
+                messagesModal.style.display = "none";
+            }
+            if (event.target == scheduleModal) {
+                scheduleModal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

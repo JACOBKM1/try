@@ -1,0 +1,239 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.navbar {
+    background: linear-gradient(135deg, #ffcc00, #ff9900); /* Gradient background */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Deeper shadow for better separation */
+}
+
+.logo img {
+    height: 80px; /* Increased logo size */
+    margin-right: 20px;
+}
+
+.site-name {
+    flex: 1;
+    text-align: center;
+    font-size: 2em; /* Larger size for the site name */
+    color: #fff; /* White color for better contrast */
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 80px; /* Align with logo height */
+    text-shadow: 3px 3px 6px #000; /* More pronounced shadow */
+}
+
+.nav-links {
+    text-align: right;
+}
+
+.nav-links a {
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+    border-radius: 5px; /* Rounded corners for the links */
+}
+
+.nav-links a.active {
+    background-color: #fff; /* Highlight active link */
+    color: #333;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: #ffcc00;
+    transition: width 0.3s, left 0.3s;
+}
+
+.nav-links a:hover::after, .nav-links a.active::after {
+    width: 100%;
+    left: 0;
+}
+
+.section {
+    padding: 60px 20px;
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    height: 100vh; /* Full screen height for each section */
+    margin-top: 60px; /* Ensure sections are not hidden behind the fixed navbar */
+    position: relative; /* For absolute positioning of the login form */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.home-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/static/images/12.jpg"); /* Gradient overlay for better text readability */
+    background-size: cover;
+    background-position: center;
+}
+
+.trainers-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/static/images/trainer-bg.jpg"); /* Gradient overlay with a different background image */
+    background-size: cover;
+    background-position: center;
+}
+
+.trainers-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.trainer {
+    text-align: center;
+    margin: 20px;
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+    background: rgba(255, 255, 255, 0.8); /* Light background for trainer details */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for better visibility */
+}
+
+.trainer img {
+    width: 100%;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.services-section {
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("/static/images/th1.jpeg"); /* Light gradient overlay */
+    background-size: cover;
+    background-position: center;
+}
+
+.services-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.service {
+    text-align: center;
+    margin: 20px;
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.contact-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/static/images/th1.jpeg");
+    background-size: cover;
+    background-position: center;
+}
+
+.about-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/static/images/th2.jpeg");
+    background-size: cover;
+    background-position: center;
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 3em;
+    text-shadow: 2px 2px 4px #000;
+}
+
+p {
+    text-align: center;
+    color: #fff;
+    font-size: 1.2em;
+    text-shadow: 1px 1px 3px #000;
+}
+
+blockquote {
+    font-size: 1.5em;
+    margin: 20px 0;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.login-form {
+   
+    position: absolute;
+    right: 20px; /* Distance from the right edge */
+    top: 30%; /* Position from the top */
+    transform: translateY(-50%); /* Center vertically */
+    max-width: 400px;
+    margin: 30px auto;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #ff9900;
+    color: #fff;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-form button.cancel-btn {
+    background-color: #ccc;
+    margin-top: 10px;
+}
+
+.login-form p {
+    text-align: center;
+}
+
+.login-form a {
+    color: #ff9900;
+    text-decoration: none;
+}
+
+.login-form a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Dashboard 2</title>
+    <link rel="stylesheet" href="{% static 'css/trainerdashboard2.css' %}">
+</head>
+<body>
+    <h1>Trainer Dashboard - Trainer 2</h1>
+    
+    <!-- Schedule Section -->
+    <div class="schedule-container">
+        <h2>Client Schedule</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Client Name</th>
+                    <th>Scheduled Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for schedule in schedules %}
+                <tr>
+                    <td>{{ schedule.user.fname }} {{ schedule.user.lname }}</td>
+                    <td>{{ schedule.time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <hr>
+
+    <!-- Messages Section -->
+    <div class="messages-container">
+        <h2>Client Messages</h2>
+
+        {% for log in schedules %}
+        <div class="message-entry">
+            <h3>Client: {{ log.user.fname }} {{ log.user.lname }}</h3>
+            <p><strong>Email:</strong> {{ log.user.email }}</p>
+            <div class="message-log">
+                <p><strong>Messages:</strong></p>
+                <pre>{{ log.message_log }}</pre> <!-- Display the message log -->
+            </div>
+
+            <!-- Reply Section -->
+            <div class="reply-section">
+                <textarea id="reply-{{ log.id }}" placeholder="Type your reply..."></textarea>
+                <button id="send-button-{{ log.id }}" onclick="sendReply({{ log.id }})">Send Reply</button>
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+
+    <script>
+        function sendReply(trainerId) {
+            var replyMessage = document.getElementById('reply-' + trainerId).value;
+            var sendButton = document.getElementById('send-button-' + trainerId);
+            if (!replyMessage) {
+                alert('Please enter a reply.');
+                return;
+            }
+
+            // Disable the button after sending
+            sendButton.disabled = true;
+
+            // Send the reply via AJAX to the server
+            var formData = new FormData();
+            formData.append('trainer_id', trainerId);
+            formData.append('reply_message', replyMessage);
+
+            fetch("{% url 'trainerdashboard2' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Reply sent successfully!');
+                    location.reload();  // Reload the page to see the updated message log
+                } else {
+                    alert('Error sending reply: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while sending the reply.');
+            })
+            .finally(() => {
+                // Re-enable the button regardless of the outcome
+                sendButton.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>

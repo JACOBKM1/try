@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/goal.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Goals</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Set Your Goal</h1>
+
+        <div class="quote">
+            <p>"The only bad workout is the one you didn't do."</p>
+        </div>
+
+        <form id="goalForm" action="" method="post">
+            {% csrf_token %}
+            <label for="goal">Choose Your Goal:</label>
+            <select name="goal" id="goal" value="{{ userdet.goal}}">
+                <option value="weight_gain">Weight Gain</option>
+                <option value="weight_loss">Weight Loss</option>
+                <option value="strength_training">Strength Training</option>
+            </select>
+
+            <label for="equipment">Do you have any equipment?</label>
+            <select name="equipment" id="equipment" value="{{ userdet.equipment }}">
+                <option value="none">No Equipment</option>
+                <option value="dumbbell_5kg">Dumbbell (5kg)</option>
+                <option value="dumbbell_2kg">Dumbbell (2kg)</option>
+                <option value="rope">Rope</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="other_equipment" class="hidden">Enter your equipment:</label>
+            <input type="text" id="otherequipment" name="otherequipment" placeholder="Enter your equipment">
+
+            <div class="buttons">
+                <button type="submit" class="submit-btn">Submit</button>
+                <button type="reset" class="reset-btn">Reset</button>
+                <button type="button" class="home-btn" onclick="window.location.href='/'">Home</button>
+            </div>
+        </form>
+
+        <div class="quote">
+            <p>"Push yourself because no one else is going to do it for you."</p>
+        </div>
+    </div>
+
+    <script>
+        // Show the 'Enter your equipment' field if 'Other' is selected
+        document.getElementById('equipment').addEventListener('change', function() {
+            const otherEquipmentLabel = document.querySelector('label[for="other_equipment"]');
+            const otherEquipmentInput = document.getElementById('other_equipment');
+            if (this.value === 'other') {
+                otherEquipmentLabel.classList.remove('hidden');
+                otherEquipmentInput.classList.remove('hidden');
+            } else {
+                otherEquipmentLabel.classList.add('hidden');
+                otherEquipmentInput.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Header with user details and logout button */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+}
+
+/* User Info Section */
+.user-info h3 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.user-info p {
+    margin: 5px 0;
+    font-size: 1em;
+}
+
+/* Top-right section for date, time, and logout button */
+.top-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Date and Time Style */
+#datetime {
+    font-size: 1.2em;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* Logout Button Style */
+.logout-btn {
+    color: white;
+    background-color: #ff512f;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background-color: #ff784f;
+}
+
+/* Main Section of the Dashboard */
+.dashboard-main {
+    padding: 20px;
+}
+
+/* Fitness Quotes Section */
+.quotes-section blockquote {
+    font-size: 1.2em;
+    color: #555;
+    border-left: 5px solid #4CAF50;
+    padding-left: 10px;
+    margin: 20px 0;
+}
+
+/* Trainer Selection */
+.trainer-selection {
+    margin-top: 20px;
+}
+
+.trainer-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.trainer {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 30%;
+}
+
+.trainer h4 {
+    margin: 0;
+}
+
+.select-trainer-btn, .edit-goal-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.select-trainer-btn:hover, .edit-goal-btn:hover {
+    background-color: #45a049;
+}
+
+/* Chat Section */
+#chat-section {
+    margin-top: 20px;
+}
+
+.chat-messages {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+}
+
+#chat-input {
+    width: 70%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px;
+}
+
+.small-graph {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+/* General layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styling */
+.dashboard-header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info h3, .user-info p {
+    margin: 0;
+}
+
+.top-right {
+    text-align: right;
+}
+
+.logout-btn {
+    color: #fff;
+    background-color: #ff4d4d;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Main content area */
+.dashboard-main {
+    padding: 20px;
+}
+
+.goal-section {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.goal-display-btn, .edit-goal-btn {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.select-trainer-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Trainer selection section */
+.trainer-selection {
+    margin-top: 20px;
+}
+
+.trainer {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.trainer button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.quotes-section blockquote {
+    font-style: italic;
+    margin: 20px 0;
+    background-color: #eee;
+    padding: 10px;
+    border-left: 5px solid #4CAF50;
+}
+
+.small-graph {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#chat-section {
+    margin-top: 20px;
+}
+
+#chat-messages {
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 150px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+#chat-input {
+    width: calc(100% - 80px);
+    padding: 10px;
+}
+
+#chat-section button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+/* Chat button */
+.chat-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #FFA500; /* Orange color for differentiation */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Hide the chat section by default */
+#chat-section {
+    display: none;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+}

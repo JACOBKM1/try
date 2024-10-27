@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Registration</title>
+    
+</head>
+<body>
+    <div class="background">
+        <div class="container">
+            <div class="quote">
+                <p>"NO PAIN NO GAIN"</p>
+            </div>
+            <h1>Fitness Registration</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="firstname">First Name:</label>
+                    <input type="text" id="username" name="fname" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name:</label>
+                    <input type="text" id="lastname" name="lname" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email ID:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <div class="gender-options">
+                        <label for="male">
+                            <input type="radio" id="male" name="gender" value="male" required>
+                            Male
+                        </label>
+                        <label for="female">
+                            <input type="radio" id="female" name="gender" value="female" required>
+                            Female
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="number">Contact Number:</label>
+                    <input type="tel" id="number" name="contactno" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="re-password">Re-enter Password:</label>
+                    <input type="password" id="repassword" name="repassword" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="register-btn">Register</button>
+                    <button type="reset" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+            {% for messages in messages %}
+            <h3 style="color:#ff512f">{{messages}}</h3>
+
+
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
